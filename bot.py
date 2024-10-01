@@ -32,13 +32,15 @@ logger = logging.getLogger(__name__)
     
 # Telegram Bot was created using ChatGPT, so it uses an older library (python-telegram-bot==13.7)
 def welcome_message() -> str:
-    message = (
-        "🤖 Ahoy there, Solana Wallet Wrangler! Welcome to Solana Wallet Xray Bot! 🤖\n\n"
-        "I'm your trusty sidekick, here to help you juggle those wallets and keep an eye on transactions.\n"
-        "Once you've added your wallets, you can sit back and relax, as I'll swoop in with a snappy notification and a brief transaction summary every time your wallet makes a move on Solana. 🚀\n"
-        "Have a blast using the bot! 😄\n\n"
-        "Ready to rumble? Use the commands below and follow the prompts:"
-    )
+    message =  (
+    "🤖 Эй, салага, Солана-кошельковый фокусник! Добро пожаловать в бота Solana Wallet Xray! 🤖\n\n"
+    "Я твой верный кореш, буду помогать следить за твоими кошелями и палить движухи по транзакциям.\n"
+    "Как только добавишь свои кошельки, можешь чиллить – я сразу подлечу с уведомлением и короткой сводкой, "
+    "как только твой кошелёк двинет на Солане. 🚀\n"
+    "Будь на стиле и кайфуй с ботом! 😄\n\n"
+    "Готов мутить движ? Вот тебе команды – следуй за мной, не тупи!"
+)
+
 
     return message
 
@@ -57,7 +59,7 @@ def start(update: Update, context: CallbackContext) -> None:
     if update.message:
         update.message.reply_text(welcome_message(), reply_markup=reply_markup)
     else:
-        update.callback_query.edit_message_text("The world is your oyster! Choose an action and let's embark on this thrilling journey! 🌍", reply_markup=reply_markup)
+        update.callback_query.edit_message_text("Мир твой , устрица! \т Что дальше то .. 🌍", reply_markup=reply_markup)
 
 def next(update: Update, context: CallbackContext) -> None:
     keyboard = [
@@ -101,7 +103,7 @@ def back(update: Update, context: CallbackContext) -> int:
     # go back to main menu from any interaction with the bot
     query = update.callback_query
     query.answer()
-    query.edit_message_text("No worries! Let's head back to the main menu for more fun! 🎉")
+    query.edit_message_text("back to the main menu ! 🎉")
     start(update, context)
     return ConversationHandler.END
 
@@ -109,7 +111,7 @@ def add_wallet_start(update: Update, context: CallbackContext) -> int:
     reply_markup = back_button(update, context)
     query = update.callback_query
     query.answer()
-    query.edit_message_text("Alright, ready to expand your wallet empire? Send me the wallet address you'd like to add! 🎩", reply_markup=reply_markup)
+    query.edit_message_text("Кидай адрес и дело в шляпе 🎩", reply_markup=reply_markup)
     return ADDING_WALLET
 
 def add_wallet_finish(update: Update, context: CallbackContext) -> int:
@@ -164,7 +166,7 @@ def add_wallet_finish(update: Update, context: CallbackContext) -> int:
             }
             wallets_collection.insert_one(main)
                 
-            update.message.reply_text("Huzzah! Your wallet has been added with a flourish! 🎉 Now you can sit back, relax, and enjoy your Solana experience as I keep an eye on your transactions. What's your next grand plan?", reply_markup=reply_markup)
+            update.message.reply_text("Аллилуйа, Панк! 🎉\n Теперь сиди, расслабься и кайфуй на Солане. Не путай с солью \n Какой следующий гениальный план?", reply_markup=reply_markup)
         else:
             update.message.reply_text("Bummer! We hit a snag while saving your wallet. Let's give it another whirl, shall we? 🔄", reply_markup=reply_markup)
 
