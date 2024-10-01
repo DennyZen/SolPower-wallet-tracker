@@ -29,7 +29,8 @@ logging.basicConfig(
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
-    
+from loguru import logger
+logger.add("log.log", rotation="7 day", compression="zip", level="TRACE", backtrace=True, diagnose=True)
 # Telegram Bot was created using ChatGPT, so it uses an older library (python-telegram-bot==13.7)
 def welcome_message() -> str:
     message =  (
