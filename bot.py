@@ -224,11 +224,11 @@ def show_wallets(update: Update, context: CallbackContext) -> None:
         }))
     if len(user_wallets) == 0:
         update.callback_query.answer()
-        update.callback_query.edit_message_text("Whoa, no wallets here! Let's add some, or pick another action to make things exciting! 🎢", reply_markup=reply_markup)
+        update.callback_query.edit_message_text("Горшочек то пустой🥵\n мозг мне не делай, шизик! Делай красиво 🎢", reply_markup=reply_markup)
     else:
         wallet_list = "\n".join([wallet["address"] for wallet in user_wallets])
         update.callback_query.answer()
-        update.callback_query.edit_message_text(f"Feast your eyes upon your wallet collection! 🎩\n\n{wallet_list}\n\nNow, what's your next move, my friend? 🤔", reply_markup=reply_markup)
+        update.callback_query.edit_message_text(f"Такие адреса в шляпе! 🎩\n\n{wallet_list}\n\nwhat's your next move, my friend? 🤔", reply_markup=reply_markup)
 
 
 def main() -> None:
