@@ -30,7 +30,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 from loguru import logger
-logger.add("log.log", rotation="7 day", compression="zip", level="TRACE", backtrace=True, diagnose=True)
+logger.add("bot.log", rotation="7 day", compression="zip", level="TRACE", backtrace=True, diagnose=True)
 # Telegram Bot was created using ChatGPT, so it uses an older library (python-telegram-bot==13.7)
 def welcome_message() -> str:
     message =  (
@@ -233,6 +233,22 @@ def show_wallets(update: Update, context: CallbackContext) -> None:
 
 
 def main() -> None:
+    # item = {
+    #             "user_id": str(user_id),
+    #             "address": wallet_address,
+    #             "datetime": datetime.now(),
+    #             "status": 'active',
+    #         }
+    #wallets_collection.insert_one(item)
+    helius_api_key = "6cbf9a71-36c4-4d19-aad0-5e375448894a"
+    try:
+        import httpx
+        response = httpx.get(f"https://api.helius.xyz/v0/webhooks?api-key={helius_api_key}")
+
+        if response.status_code == 200:
+            webhooks = response.json()
+        logger.warn(f"{webhooks=}")
+    except Exception as e:     print(f"An error occurred: {e}")
     updater = Updater(TOKEN)
     dispatcher = updater.dispatcher
 
