@@ -43,7 +43,7 @@ def add_webhook(user_id, user_wallet, webhook_id, addresses):
         return True
     addresses.append(user_wallet)
     data = {
-        "webhookURL": "https://y12sbdpq09.execute-api.us-east-1.amazonaws.com/wallet",
+        "webhookURL": HELIUS_WEBHOOK_URL,
         "accountAddresses": addresses,
         "transactionTypes":["Any"],
         "webhookType": "enhanced",

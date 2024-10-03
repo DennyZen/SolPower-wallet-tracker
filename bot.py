@@ -60,7 +60,7 @@ def start(update: Update, context: CallbackContext) -> None:
     if update.message:
         update.message.reply_text(welcome_message(), reply_markup=reply_markup)
     else:
-        update.callback_query.edit_message_text("Мир твой , устрица! \т Что дальше то .. 🌍", reply_markup=reply_markup)
+        update.callback_query.edit_message_text("Мир твой , устрица! \n Что дальше то .. 🌍", reply_markup=reply_markup)
 
 def next(update: Update, context: CallbackContext) -> None:
     keyboard = [

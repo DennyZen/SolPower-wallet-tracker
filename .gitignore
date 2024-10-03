@@ -6,3 +6,6 @@ wallet.log
 .DS_Store
 .venv/
 .env
+log.log
+wallet_tracking.log
+wallet_tracking.2024-10-01_11-21-54_718878.log.zip

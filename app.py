@@ -1,6 +1,6 @@
 from flask import Flask, request
-
-# Telegram Bot was created using ChatGPT, so it uses an older library (python-telegram-bot==13.7)
+from loguru import logger
+logger.add("wallet_tracking.log", rotation="1 day", compression="zip", level="TRACE", backtrace=True, diagnose=True)
 from telegram import Bot
 from telegram.utils.request import Request
 
@@ -27,9 +27,9 @@ wallets_collection = db.wallets
 logging.basicConfig(
     filename='wallet.log',
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
+    level=logging.DEBUG
 )
-logger = logging.getLogger(__name__)
+#logger = logging.getLogger(__name__)
 
 def send_message_to_user(bot_token, user_id, message):
     # Use telegram library to send text message
@@ -124,9 +124,11 @@ def check_image(data):
         return ''
 
 def create_message(data):
+    logger.debug(f"create_message : {data=}")
     # create a simple text message
     tx_type = data[0]['type'].replace("_", " ")
     tx = data[0]['signature']
+
     source = data[0]['source']
     description = data[0]['description']
 
@@ -141,7 +143,7 @@ def create_message(data):
             accounts.append(token['toUserAccount'])
         accounts = list(set(accounts))
 
-    # check if image exists
+    logging.debug(f"accounts : {accounts=}")
     image = check_image(data)
     
     # find all users with these accounts (multiple users can add the same address)
@@ -184,10 +186,12 @@ app = Flask(__name__)
 @app.route('/wallet', methods=['POST'])
 def handle_webhook():
     # Extract data from incoming request
+    logger.info(f"Got msg: \n {request}")
+    print(f"Got msg: \n {request}")
     data = request.json
     
     messages = create_message(data)
-
+    logger.debug(f'messages : {messages=}')
     for message in messages:
         # log message into DB for debugging
         db_entry = {
@@ -197,7 +201,7 @@ def handle_webhook():
         }
         db.messages.insert_one(db_entry)
 
-        logging.info(message)
+        logger.info(message)
 
         if len(message['image']) > 0:
             try:
