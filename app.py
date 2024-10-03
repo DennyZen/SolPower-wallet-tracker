@@ -123,6 +123,24 @@ def check_image(data):
                     return ''
         return ''
 
+
+def find_field(data, field_name, path=None):
+    if path is None:
+        path = []
+
+    if isinstance(data, dict):
+        if field_name in data:
+            return data[field_name], path + [field_name]
+        for key, value in data.items():
+            result = find_field(value, field_name, path + [key])
+            if result:
+                return result
+    elif isinstance(data, list):
+        for index, item in enumerate(data):
+            result = find_field(item, field_name, path + [index])
+            if result:
+                return result
+    return None, None
 def create_message(data):
     logger.debug(f"create_message : {data=}")
     # create a simple text message
@@ -143,7 +161,7 @@ def create_message(data):
             accounts.append(token['toUserAccount'])
         accounts = list(set(accounts))
 
-    logging.debug(f"accounts : {accounts=}")
+    logger.debug(f"accounts : {accounts=}")
     image = check_image(data)
     
     # find all users with these accounts (multiple users can add the same address)
@@ -155,8 +173,7 @@ def create_message(data):
     ))
     found_users = [i['user_id'] for i in found_docs]
     found_users = set(found_users)
-    logging.info(found_users)
-    
+    logger.debug(f" : {found_docs=} \n {found_users=}")
     # for each user create a message
     messages = []
     for user in found_users:
@@ -178,6 +195,8 @@ def create_message(data):
         formatted_text = formatted_text + f'\n[XRAY](https://xray.helius.xyz/tx/{tx}) | [Solscan](https://solscan.io/tx/{tx})'
         formatted_text = formatted_text.replace("#", "").replace("_", " ")
         messages.append({'user': user, 'text': formatted_text, 'image': image})
+    logger.info(f"{tx_type} \n {description=} \n https://solscan.io/tx/{tx} ")
+    #send_message_to_user(BOT_TOKEN, message['user'], message['text'])
     return messages
 
 # Launch with Flask
@@ -186,8 +205,6 @@ app = Flask(__name__)
 @app.route('/wallet', methods=['POST'])
 def handle_webhook():
     # Extract data from incoming request
-    logger.info(f"Got msg: \n {request}")
-    print(f"Got msg: \n {request}")
     data = request.json
     
     messages = create_message(data)
