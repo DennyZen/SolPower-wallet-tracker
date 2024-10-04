@@ -249,6 +249,7 @@ def main() -> None:
             webhooks = response.json()
         logger.warning(f"{webhooks[0]['accountAddresses']=}")
         for item in webhooks[0]['accountAddresses']:
+            user_id = '7096568029'
             item = {
                  "user_id": str(user_id),
                  "address": item,
