@@ -21,7 +21,7 @@ HELIUS_KEY = config.HELIUS_KEY
 
 client = MongoClient(MONGODB_URI)
 db = client.sol_wallets
-wallets_collection = db.wallets
+wallets_collection = db.wallets_test
 
 # Set up logging
 logging.basicConfig(

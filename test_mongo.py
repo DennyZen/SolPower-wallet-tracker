@@ -5,7 +5,7 @@ from pymongo import MongoClient
 
 client = MongoClient(MONGODB_URI)
 db = client.sol_wallets
-wallets_collection = db.wallets
+wallets_collection = db.wallets_test
 
 found_docs = list(wallets_collection.find(
         {
