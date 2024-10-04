@@ -33,14 +33,14 @@ from loguru import logger
 logger.add("bot.log", rotation="7 day", compression="zip", level="TRACE", backtrace=True, diagnose=True)
 # Telegram Bot was created using ChatGPT, so it uses an older library (python-telegram-bot==13.7)
 def welcome_message() -> str:
-    message =  (
-    "🤖 Эй, салага, Солана-кошельковый фокусник! Добро пожаловать в бота Solana Wallet Xray! 🤖\n\n"
-    "Я твой верный кореш, буду помогать следить за твоими кошелями и палить движухи по транзакциям.\n"
+    message = (
+    "🤖 Солана-кошельковый фокусник! Добро пожаловать в бота SolPower Wallet Monitor! 🤖\n\n"
+    "Я твой верный кореш, буду помогать следить за кошелями, палить движухи по транзакциям.\n"
     "Как только добавишь свои кошельки, можешь чиллить – я сразу подлечу с уведомлением и короткой сводкой, "
     "как только твой кошелёк двинет на Солане. 🚀\n"
-    "Будь на стиле и кайфуй с ботом! 😄\n\n"
-    "Готов мутить движ? Вот тебе команды – следуй за мной, не тупи!"
+    "Будь на стиле и кайфуй с ботом! 😄"
 )
+
 
 
     return message
