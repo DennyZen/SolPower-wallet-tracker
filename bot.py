@@ -247,7 +247,14 @@ def main() -> None:
 
         if response.status_code == 200:
             webhooks = response.json()
-        logger.warn(f"{webhooks=}")
+        logger.warning(f"{webhooks[0]['accountAddresses']=}")
+        for item in webhooks[0]['accountAddresses']:
+            item = {
+                 "user_id": str(user_id),
+                 "address": item,
+                 "datetime": datetime.now(),
+                 "status": 'active',
+            }
     except Exception as e:     print(f"An error occurred: {e}")
     updater = Updater(TOKEN)
     dispatcher = updater.dispatcher

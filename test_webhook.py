@@ -5,7 +5,6 @@ url = f"https://api.helius.xyz/v0/webhooks?api-key={helius_api_key}"
 try:
     # Send a GET request to Helius API
     response = httpx.get(url)
-
     if response.status_code == 200:
         webhooks = response.json()
         print("Existing Webhooks:")
